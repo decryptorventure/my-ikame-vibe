@@ -42,8 +42,8 @@ const customFetchBase: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  // Use mock data when VITE_USE_MOCK=true (vibe coding / UI prototyping mode)
-  if (import.meta.env.VITE_USE_MOCK === 'true') {
+  // Use mock data when VITE_USE_MOCK !== 'false' (vibe coding / UI prototyping mode)
+  if (import.meta.env.VITE_USE_MOCK !== 'false') {
     return mockFetchBase(args, api, extraOptions);
   }
 

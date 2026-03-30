@@ -269,3 +269,20 @@ sections_completed:
 - RTK Query cache tự động — không fetch lại thủ công nếu không cần
 - Lottie animations nặng — lazy load nếu không visible on mount
 - Không tạo object/array inline trong JSX props (gây re-render)
+
+---
+
+## Usage Guidelines
+
+**Cho AI Agents:**
+- Đọc file này TRƯỚC KHI implement bất kỳ code nào
+- Tuân thủ TẤT CẢ rules — đặc biệt section **⚠️ CRITICAL: Frontend-Only / Mock-Data Mode**
+- Khi nghi ngờ → chọn option restrictive hơn
+- Cập nhật file này khi có patterns mới được thiết lập
+
+**Cho Humans:**
+- Giữ file này lean — chỉ capture unobvious rules
+- Cập nhật khi tech stack thay đổi
+- Review định kỳ để remove rules đã lỗi thời
+
+_Last Updated: 2026-03-30_
