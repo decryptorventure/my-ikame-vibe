@@ -1,0 +1,62 @@
+services:
+  - docker:20-dind
+
+stages:
+  - build
+  - manifest
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_REGISTRY_PATH: gitlab.ikameglobal.com:5050/ikame-technology/gitlab/my-ikame
+  TAG: $CI_PIPELINE_IID-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
+
+build_fontend_dev:
+  stage: build
+  image: docker:20
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_TLS_CERTDIR: ""
+  only:
+    - dev
+  script:
+    - echo "$PERSONAL_ACCESS_TOKEN_KEY" | docker login -u "$DOCKER_REGISTRY_USER" --password-stdin $DOCKER_REGISTRY
+    - echo "$DOCKER_REGISTRY_PATH/$CI_PROJECT_NAME:$TAG"
+    - docker build -t $DOCKER_REGISTRY_PATH/$CI_PROJECT_NAME:$TAG .
+    - docker push $DOCKER_REGISTRY_PATH/$CI_PROJECT_NAME:$TAG
+
+update_k8s_manifest:
+  stage: manifest
+  image: google/cloud-sdk:alpine # có gcloud
+  variables:
+    GIT_STRATEGY: none
+    USE_GKE_GCLOUD_AUTH_PLUGIN: "True"
+  needs:
+    - job: build_fontend_dev
+  before_script:
+    - apk add --no-cache git bash curl wget python3 py3-crcmod
+    - gcloud components install gke-gcloud-auth-plugin --quiet
+
+    - git config --global user.email "ci-bot@gitlab.com"
+    - git config --global user.name "GitLab CI Bot"
+
+    - echo $GCP_SERVICE_ACCOUNT_KEY | base64 -d > gcp-key.json
+    - gcloud auth activate-service-account --key-file=gcp-key.json
+    - gcloud config set project gke-ikame-technology
+    - gcloud container clusters get-credentials cluster-platform-dev --region asia-southeast1
+
+    - wget -q https://dl.k8s.io/release/$(wget -qO- https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
+    - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    - kubectl version --client
+  script:
+    - git clone https://oauth2:$GITLAB_ACCESS_TOKEN@gitlab.ikameglobal.com/ikame-technology/gitlab/devops/k8s/ikame-k8s-dev.git
+    - cd ikame-k8s-dev/workspaces/my-ikame-web
+    - 'sed -i "s#\(image: \).*#\1${DOCKER_REGISTRY_PATH}/${CI_PROJECT_NAME}:${TAG}#" main.yaml'
+
+    - kubectl delete -f main.yaml || true # ignore error if not exists
+    - kubectl apply -f main.yaml
+
+    - git add main.yaml
+    - git commit -m "Update my-ikame-web main.yaml to image tag ${TAG}"
+    - git push
+  only:
+    - dev

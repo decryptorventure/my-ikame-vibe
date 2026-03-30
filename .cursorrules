@@ -1,0 +1,325 @@
+# Cursor Rules for Vite + React + Ant Design Project
+
+## Project Overview
+This is a Vite + React + TypeScript project with a custom UI kit (`@frontend-team/ui-kit`), Redux Toolkit Query for state management, and Keycloak for authentication.
+
+## Tech Stack
+- Framework: Vite + React 18
+- Language: TypeScript (strict mode)
+- UI Library: `@frontend-team/ui-kit` (internal)
+- State Management: Redux Toolkit Query (RTK Query) + Redux Toolkit
+- Routing: React Router DOM
+- Authentication: Keycloak SSO
+- Styling: Tailwind CSS + `@frontend-team/ui-kit` design tokens
+- Form Handling: React Hook Form + Zod validation
+- Build Tool: Vite
+
+## Critical Rules
+
+### File Size Limit
+- **NO FILES GREATER THAN 200 LINES** - This is a hard limit
+- Split large files into smaller, focused modules
+- Extract custom hooks into separate files
+- Break down large components into smaller sub-components
+
+### Logic vs UI Separation (Mandatory)
+- Do NOT place business logic, API calls, or side-effects directly in React components
+- Components should only render UI and invoke callbacks
+- Extract all logic into custom hooks (e.g., `useFeatureX`) or utilities under `hooks/` or `lib/`
+- Form handling logic (validation, mapping, side-effects) must live in hooks
+- Components receive `form`, `handlers`, and `state` via props or hooks
+
+## Project Structure
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # Ant Design component wrappers (if any)
+│   ├── common/          # Shared/common components
+│   └── [ComponentName].tsx  # Global components
+├── pages/              # Page components (feature-based organization)
+│   ├── [FeatureName]/
+│   │   ├── [FeatureName].tsx      # Main page component (<200 lines)
+│   │   ├── components/            # Feature-specific components
+│   │   ├── hooks/                 # Feature-specific hooks
+│   │   │   ├── use[FeatureName].ts
+│   │   │   └── index.ts           # Barrel export
+│   │   ├── types.ts               # Feature-specific types
+│   │   └── index.ts               # Barrel export
+├── state/              # State management
+│   ├── contexts/       # React contexts (auth-context.tsx)
+│   ├── slices/         # Redux Toolkit slices
+│   └── store/          # Redux store configuration
+├── services/           # API services (RTK Query)
+│   └── [domain].service.ts
+├── lib/                # Utility libraries (keycloak, customFetchBase, etc.)
+├── utils/              # Helper utilities
+├── types/              # TypeScript type definitions (domain-based)
+├── hooks/              # Global/shared custom React hooks
+└── constants/          # Application constants
+```
+
+## Path Aliases (MUST USE)
+- `@/*` → `./src/*`
+- `@/components/*` → `./src/components/*`
+- `@/lib/*` → `./src/lib/*`
+- `@/utils/*` → `./src/utils/*`
+- `@/hooks/*` → `./src/hooks/*`
+- `@/pages/*` → `./src/pages/*`
+- `@/state/*` → `./src/state/*`
+- `@/types/*` → `./src/types/*`
+- `@/services/*` → `./src/services/*`
+- `@/constants/*` → `./src/constants/*`
+- `@/assets/*` → `./src/assets/*`
+
+**Always use path aliases instead of relative imports when possible.**
+
+## TypeScript Standards
+- Use strict TypeScript configuration
+- Define interfaces for all data structures
+- Prefer `interface` over `type` for object shapes (unless union/intersection needed)
+- Always define proper return types for functions
+- Avoid `any` - use `unknown` if type is truly unknown, then narrow
+- Use `as const` for literal types and readonly arrays
+- Never use inline type definitions in component props
+
+## React Component Standards
+- Use functional components with hooks exclusively
+- Prefer arrow functions for component definitions
+- Use proper TypeScript interfaces for props (NEVER inline types)
+- Components should be focused on rendering UI only
+- Extract business logic to custom hooks
+- Use proper key props for list items (never index as key)
+- Implement proper cleanup in useEffect hooks
+
+## File Naming Conventions
+- **Components**: PascalCase (e.g., `AccountSelector.tsx`, `MediationGroupsTable.tsx`)
+- **Hooks**: camelCase starting with 'use' (e.g., `useAccount.ts`, `useAbTest.ts`)
+- **Utilities**: camelCase (e.g., `formatDate.ts`, `customFetchBase.ts`)
+- **Types**: camelCase with `.types.ts` suffix (e.g., `mediation.types.ts`)
+- **Services**: camelCase with `.service.ts` suffix (e.g., `apps.service.ts`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `API_ENDPOINTS.ts`)
+- **Slices**: camelCase with `Slice.ts` suffix (e.g., `accountSlice.ts`)
+- **Pages**: PascalCase matching folder name (e.g., `AppManagement.tsx`)
+
+## Import Order (MUST FOLLOW)
+1. React and React-related imports
+2. Third-party libraries (antd, react-router-dom, etc.)
+3. Internal imports using path aliases (@/...)
+   - Group by category: services, hooks, types, components, state, lib/utils
+4. Relative imports (avoid when possible, use for same-level files only)
+5. Type-only imports use `import type` keyword
+
+Example:
+```typescript
+import React, { useCallback, useMemo } from 'react';
+import { Select, Spinner } from '@frontend-team/ui-kit';
+import { useDispatch } from 'react-redux';
+import { useGetAdmobAccountsQuery } from '@/services/admobAccounts.service';
+import useAccount from '@/hooks/useAccount';
+import type { RootState } from '@/state/store';
+import { setIsSwitching } from '@/state/slices/accountSlice';
+```
+
+## Component Structure Template
+```typescript
+import React from 'react';
+import { useAuth } from '@/state/contexts/auth-context';
+import type { MyComponentProps } from './types';
+
+interface MyComponentProps {
+  requiredProp: string;
+  optionalProp?: number;
+  onAction?: () => void;
+}
+
+export default function MyComponent({ requiredProp, optionalProp, onAction }: MyComponentProps) {
+  // 1. Hooks (state, effects, context)
+  // 2. Derived state/values (useMemo)
+  // 3. Event handlers (useCallback)
+  // 4. Effects (useEffect)
+  // 5. Early returns (loading, error states)
+  // 6. Render
+  return (
+    // JSX
+  );
+}
+```
+
+## API Calling Rules (Redux Toolkit Query)
+
+### CRITICAL: Use RTK Query for ALL API calls
+- NO direct fetch/axios calls
+- Create separate service files for different domains
+- Use customFetchBase for authentication and headers
+- One service file per domain
+
+### Service File Structure
+```typescript
+import { createApi } from '@reduxjs/toolkit/query/react';
+import customFetchBase from '@/lib/customFetchBase';
+import type { ResponseType, RequestType } from '@/types/[domain].types';
+
+export const [domain]Api = createApi({
+  reducerPath: '[domain]Api',
+  baseQuery: customFetchBase,
+  tagTypes: ['[DomainTag]'],
+  endpoints: (builder) => ({
+    // Define endpoints here
+  }),
+});
+
+export const {
+  use[Action][Entity]Query,
+  use[Action][Entity]Mutation,
+} = [domain]Api;
+```
+
+### Service File Naming
+- Service files: `[domain].service.ts` (e.g., `mediation.service.ts`)
+- Export: `[domain]Api` (e.g., `mediationApi`)
+- reducerPath: `'[domain]Api'`
+- tagTypes: `['[DomainTag]']`
+
+## State Management
+- Use RTK Query for server state (all API data)
+- Use Redux Toolkit slices for global client state
+- Use React Context for theme/auth/global settings
+- Use local useState for component-specific state
+- Keep state as close to where it's used as possible
+
+### Prop Drilling — CRITICAL Rule
+- **NEVER pass props more than 2 component levels deep** — this is prop drilling and makes code hard to read and maintain
+- If a prop needs to go through 3+ levels, use one of these instead:
+  - **React Context** (`src/state/contexts/`) — for feature-scoped shared state (e.g., a form wizard, a modal flow, a page-level state shared by sibling components)
+  - **Redux slice** (`src/state/slices/`) — for state used across multiple pages or features, or state that needs to persist
+- Decision guide:
+  - Shared within a single feature/page tree → use Context
+  - Shared across features/pages or needs persistence → use Redux slice
+  - Only needed in one component → use local `useState`
+- Never create a Redux slice just to avoid lifting state one level — use Context for local sharing
+
+## Custom Hooks Pattern
+```typescript
+interface UseFeatureProps {
+  id?: string;
+  onSuccess?: () => void;
+}
+
+export function useFeature({ id, onSuccess }: UseFeatureProps) {
+  // RTK Query hooks
+  const { data, isLoading, error } = useGetFeatureQuery(id!, { skip: !id });
+  const [createMutation, { isLoading: isCreating }] = useCreateFeatureMutation();
+  
+  // Local state
+  const [localState, setLocalState] = useState();
+  
+  // Derived state
+  const computedValue = useMemo(() => {
+    // computation
+  }, [data]);
+  
+  // Handlers
+  const handleAction = useCallback(async () => {
+    try {
+      await createMutation(payload).unwrap();
+      onSuccess?.();
+    } catch (e) {
+      // error handling
+    }
+  }, [createMutation, onSuccess]);
+  
+  return {
+    data,
+    isLoading,
+    error,
+    computedValue,
+    handleAction,
+  };
+}
+```
+
+## UI Components
+
+We use `@frontend-team/ui-kit` for all UI. Before writing any UI code:
+1. Read `UI_KIT.md` in `.agents/skills/ui-kit/` for all available components and their APIs.
+2. ALWAYS import from `@frontend-team/ui-kit` (not sub-paths).
+3. ALWAYS use design token classes (`bg_primary`, `text_secondary`, etc.) — never raw Tailwind colors.
+4. Do NOT install or use shadcn, MUI, Ant Design or other UI libs — use our kit only.
+
+## Styling Rules
+- Use `@frontend-team/ui-kit` components instead of custom UI components when possible
+- Use Tailwind for layout and spacing utilities only
+- NEVER use raw Tailwind color classes — always use design token classes from the ui-kit
+- Keep Tailwind classes readable (max 5-6 classes per element)
+- Avoid inline styles unless necessary for dynamic values
+
+## Error Handling
+- Implement proper error boundaries for route-level errors
+- Use try-catch blocks for async operations
+- Show user-friendly error messages using `toast` from `@frontend-team/ui-kit`
+- Log errors for debugging (console.error in development)
+- Handle loading and error states in RTK Query hooks
+
+## Environment Variables
+- Use `VITE_` prefix for all environment variables
+- Define types in `src/env.d.ts`
+- Use `import.meta.env` instead of `process.env`
+- Always provide fallback values for environment variables
+
+## Variable Naming
+- Use camelCase for variables and functions
+- Use PascalCase for components, interfaces, and types
+- Use UPPER_SNAKE_CASE for constants
+- Boolean variables should start with `is`, `has`, `can`, `should`
+- Handler functions should start with `handle` (e.g., `handleSubmit`)
+
+## Code Quality
+- Keep functions small and focused (< 50 lines ideally)
+- Write self-documenting code
+- Use meaningful variable and function names
+- Remove unused imports and variables
+- No console.log in production code (use console.error for errors if needed)
+- Add JSDoc comments for complex functions and public APIs
+
+## What to Avoid
+- Using Next.js specific imports or patterns
+- Relative imports when path aliases are available
+- Inline type definitions in component props
+- Business logic in components
+- Direct API calls without RTK Query
+- `any` type (use proper interfaces)
+- Files longer than 200 lines
+- Duplicate code (extract to hooks/utilities)
+- Using Ant Design, shadcn, MUI, or any UI library other than `@frontend-team/ui-kit`
+- Raw Tailwind color classes (`bg-white`, `text-gray-900`) — use design tokens instead
+- Importing from ui-kit sub-paths (always import from `@frontend-team/ui-kit`)
+- **Prop drilling** — passing props more than 2 levels deep; use Context or Redux slice instead
+
+## Preferred Libraries
+- UI: `@frontend-team/ui-kit` (internal — do NOT use Ant Design, shadcn, or MUI)
+- Forms: React Hook Form + Zod
+- State: Redux Toolkit Query + Redux Toolkit
+- Routing: React Router DOM
+- HTTP: RTK Query (not fetch/axios directly)
+- Icons: icons exported from `@frontend-team/ui-kit` or @phosphor-icons/react
+- Styling: Tailwind CSS + `@frontend-team/ui-kit` design tokens
+
+## Keycloak SSO Integration
+- SSO endpoint: `https://sso.ikameglobal.com`
+- Token is passed via hash fragment: `#ssoToken={token}`
+- Extract token using `extractTokenFromHash()` from `@/lib/keycloak`
+- Use `redirectToSSO(urlDirect)` to redirect users to login
+- Token is automatically attached to API requests via `customFetchBase`
+
+## When Writing Code
+1. Check file size - if > 200 lines, split it
+2. Extract logic to hooks - components should only render UI
+3. Use path aliases - never use relative imports when alias is available
+4. Use RTK Query - never use fetch/axios directly
+5. Define types separately - never inline types in props
+6. Follow import order - React → Third-party → Internal (@/) → Relative
+7. Use proper naming - follow conventions strictly
+8. Handle errors - use try-catch and toast from `@frontend-team/ui-kit`
+9. Keep components focused - single responsibility principle
+10. Extract reusable logic - create custom hooks or utilities
+11. **Avoid prop drilling** - if props go more than 2 levels deep, use Context (feature-scoped) or Redux slice (global/cross-feature)

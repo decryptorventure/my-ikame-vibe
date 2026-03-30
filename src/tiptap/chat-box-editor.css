@@ -1,0 +1,169 @@
+/* ========================================
+   Chat Box Editor Styles
+   ======================================== */
+
+/* --- CSS Variables --- */
+:root {
+  --tt-chat-box-bg: var(--white, #ffffff);
+  --tt-chat-box-border: var(--tt-gray-light-a-200, #e3e5e8);
+  --tt-chat-box-radius: var(--tt-radius, 10px);
+  --tt-chat-box-send-bg: transparent;
+  --tt-chat-box-send-color: var(--tt-gray-light-400, #9ca3af);
+  --tt-chat-box-send-active-bg: var(--tt-brand-color-500, #f97316);
+  --tt-chat-box-send-active-color: var(--white, #ffffff);
+  --tt-chat-box-toolbar-border: var(--tt-gray-light-a-100, #f3f4f6);
+  --tt-chat-box-placeholder: var(--tt-gray-light-400, #9ca3af);
+}
+
+.dark {
+  --tt-chat-box-bg: var(--black, #0a0a0a);
+  --tt-chat-box-border: var(--tt-gray-dark-a-200, #2a2a2a);
+  --tt-chat-box-send-color: var(--tt-gray-dark-400, #6b7280);
+  --tt-chat-box-toolbar-border: var(--tt-gray-dark-a-100, #1f1f1f);
+  --tt-chat-box-placeholder: var(--tt-gray-dark-400, #6b7280);
+}
+
+/* --- Main Container --- */
+.chat-box-wrapper {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--tt-chat-box-border);
+  border-radius: var(--tt-chat-box-radius);
+  background-color: var(--tt-chat-box-bg);
+  transition: border-color 0.15s ease;
+}
+
+.chat-box-wrapper:focus-within {
+  border-color: var(--tt-primary, #2563eb);
+}
+
+/* --- Toolbar (optional formatting bar) --- */
+.chat-box-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--tt-chat-box-toolbar-border);
+  flex-wrap: wrap;
+}
+
+.chat-box-toolbar .tiptap-toolbar-separator {
+  height: 20px;
+  margin: 0 4px;
+}
+
+/* --- Editor Content Area --- */
+.chat-box-editor-content .tiptap.ProseMirror {
+  padding: 8px 12px;
+  min-height: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.chat-box-editor-content .tiptap.ProseMirror p.is-editor-empty:first-child::before {
+  color: var(--tt-chat-box-placeholder);
+}
+
+/* Collapsed state */
+.chat-box-wrapper[data-collapsed="true"] .chat-box-editor-content .tiptap.ProseMirror {
+  min-height: 20px;
+  max-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+}
+
+.chat-box-wrapper[data-collapsed="true"] .chat-box-toolbar {
+  display: none;
+}
+
+.chat-box-wrapper[data-collapsed="true"] .chat-box-bottom-bar {
+  border-top: none;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Collapsed: make bottom bar inline with editor */
+.chat-box-wrapper[data-collapsed="true"] .chat-box-inner {
+  display: flex;
+  align-items: center;
+}
+
+.chat-box-wrapper[data-collapsed="true"] .chat-box-editor-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-box-wrapper[data-collapsed="true"] .chat-box-bottom-bar {
+  flex-shrink: 0;
+}
+
+/* --- Bottom Bar --- */
+.chat-box-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-top: 1px solid var(--tt-chat-box-toolbar-border);
+}
+
+.chat-box-bottom-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* --- Send Button --- */
+.chat-box-send-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--tt-chat-box-send-bg);
+  color: var(--tt-chat-box-send-color);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.chat-box-send-button:hover {
+  background-color: var(--tt-gray-light-a-100, #f3f4f6);
+}
+
+.dark .chat-box-send-button:hover {
+  background-color: var(--tt-gray-dark-a-100, #1f1f1f);
+}
+
+.chat-box-send-button[data-has-content="true"] {
+  background-color: var(--tt-chat-box-send-active-bg);
+  color: var(--tt-chat-box-send-active-color);
+}
+
+.chat-box-send-button[data-has-content="true"]:hover {
+  opacity: 0.9;
+}
+
+.chat-box-send-button:disabled {
+  cursor: not-allowed;
+}
+
+.chat-box-send-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* --- Responsive --- */
+@media screen and (max-width: 480px) {
+  .chat-box-editor-content .tiptap.ProseMirror {
+    font-size: 16px;
+  }
+}

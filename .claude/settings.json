@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:ui.ikameglobal.com)",
+      "Bash(wc -l /d/my-ikame-web-dev/src/**/*.tsx /d/my-ikame-web-dev/src/**/*.ts)",
+      "Bash(curl -s http://localhost:5173 -o /dev/null -w \"%{http_code}\")",
+      "Bash(yarn dev:*)",
+      "Bash(npm --version)",
+      "Bash(npm install:*)",
+      "Bash(yarn --version)",
+      "Bash(yarn install:*)",
+      "Bash(~/.claude/skills/.venv/Scripts/python.exe ~/.claude/skills/ck-help/scripts/ck-help.py \"what can I do next suggest\")",
+      "Read(//c/Users/iKame/.claude/skills/plan/references/**)",
+      "Bash(node \"C:/Users/iKame/.claude/scripts/set-active-plan.cjs\" \"d:/my-ikame-web-dev/plans/260327-1148-gamification-onboarding-ireward\")",
+      "Bash(yarn tsc:*)",
+      "Bash(npx tsc:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/onboarding)",
+      "Bash(grep -r Modal d:/my-ikame-web-dev/node_modules/@frontend-team/ui-kit/dist/ --include=*.d.ts -l)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/ireward)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/iquest)"
+    ]
+  }
+}
