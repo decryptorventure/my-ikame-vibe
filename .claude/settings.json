@@ -17,7 +17,11 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/onboarding)",
       "Bash(grep -r Modal d:/my-ikame-web-dev/node_modules/@frontend-team/ui-kit/dist/ --include=*.d.ts -l)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/ireward)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/iquest)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/iquest)",
+      "Bash(ls -la d:/my-ikame-web-dev/*.md d:/my-ikame-web-dev/*.json)",
+      "Bash(rm DOCS.md PRD.md PLAN.md PROGRESS.md SETUP.md docs_api.md package-lock.json)",
+      "Bash(rm \"gamification-engine-docs update.md\")",
+      "Bash(ls d:/my-ikame-web-dev/*.md d:/my-ikame-web-dev/*.json)"
     ]
   }
 }

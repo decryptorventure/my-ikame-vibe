@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.19",
-    "@frontend-team/tiptap-kit": "^0.2.7",
-    "@frontend-team/ui-kit": "^1.1.1",
+    "@frontend-team/tiptap-kit": "file:vendors/tiptap-kit-0.2.7.tgz",
+    "@frontend-team/ui-kit": "file:vendors/ui-kit-1.1.1.tgz",
     "@hookform/resolvers": "^3.3.2",
     "@phosphor-icons/react": "^2.1.10",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
