@@ -30,6 +30,8 @@ export interface UserProfileResponse {
   coinTotalSpent: number;
   coinSeasonEarned: number;
   totalExpEarned: number;
+  equipped_achievement_badge?: string;
+  equipped_achievement_title?: string;
 }
 
 export interface LeaderboardEntry {
@@ -40,6 +42,7 @@ export interface LeaderboardEntry {
   totalExpEarned: number;
   name: string;
   avatar: string;
+  equipped_achievement_badge?: string;
 }
 
 export interface CreateProposalPayload {

@@ -98,6 +98,8 @@ export function getMockProfile(): UserProfileResponse {
     level,
     title: exp > 50000 ? 'Huyền thoại' : exp > 20000 ? 'Khám phá' : 'Tân binh',
     totalExpEarned: exp,
+    equipped_achievement_badge: localStorage.getItem(`demoEquippedBadge_${personaKey}`) || undefined,
+    equipped_achievement_title: localStorage.getItem(`demoEquippedTitle_${personaKey}`) || undefined,
   } as UserProfileResponse;
 }
 
@@ -106,6 +108,12 @@ export function updateMockExp(amount: number) {
   const profile = getMockProfile();
   const newExp = (profile.exp ?? 0) + amount;
   localStorage.setItem(`demoExp_${personaKey}`, newExp.toString());
+}
+
+export function equipMockAchievement(badge: string, title: string) {
+  const personaKey = localStorage.getItem('demoPersona') || 'member';
+  localStorage.setItem(`demoEquippedBadge_${personaKey}`, badge);
+  localStorage.setItem(`demoEquippedTitle_${personaKey}`, title);
 }
 
 // ─── Leaderboard ──────────────────────────────────────────────────────────────

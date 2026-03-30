@@ -10,6 +10,7 @@ export interface ProfileUser {
   joinDate?: string;
   employeeId?: string;
   officialDate?: string;
+  equippedBadge?: string;
 }
 
 export interface ProfileStatItem {
@@ -30,6 +31,9 @@ export interface Achievement {
   badgeUrl?: string;
   current: number;
   total: number;
+  status: 'in_progress' | 'claimed';
+  isEquipped: boolean;
+  canEquip: boolean;
 }
 
 export interface OngoingQuest {

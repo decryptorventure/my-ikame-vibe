@@ -33,7 +33,14 @@ export default function ProfileHeader({
             />
 
             <div className="flex flex-col gap-1">
-              <h2 className="text-xl font-semibold text_primary">{user.name}</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-semibold text_primary">{user.name}</h2>
+                {user.equippedBadge && (
+                  <span className="text-xl" title="Thành tựu đang đeo">
+                    {user.equippedBadge}
+                  </span>
+                )}
+              </div>
               <p className="text-sm text_secondary">{user.jobTitle}</p>
             </div>
           </div>

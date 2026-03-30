@@ -90,9 +90,16 @@ export default function SidebarFooter() {
         <span className="text-[10px] font-bold text_brand_primary uppercase tracking-wider truncate">
           {roleLabels[role]}
         </span>
-        <span className="text-sm font-semibold text_primary truncate leading-tight">
-          {name}
-        </span>
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className="text-sm font-semibold text_primary truncate leading-tight">
+            {name}
+          </span>
+          {profile?.equipped_achievement_badge && (
+            <span className="text-sm shrink-0" title={profile.equipped_achievement_title}>
+              {profile.equipped_achievement_badge}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

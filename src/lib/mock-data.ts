@@ -3,7 +3,7 @@
  */
 
 import type { ApiResponse, PaginatedResponse } from '@/types/api.types';
-import { getMockProfile, MOCK_LEADERBOARD_ENTRIES, MOCK_LEVEL_CONFIGS } from '@/lib/mock-profile-level-data';
+import { getMockProfile, MOCK_LEADERBOARD_ENTRIES, MOCK_LEVEL_CONFIGS, equipMockAchievement } from '@/lib/mock-profile-level-data';
 import { 
   MOCK_QUESTS, 
   getMockProgress, 
@@ -34,6 +34,12 @@ function paginated<T>(items: T[], page = 1, limit = 20): PaginatedResponse<T> {
 export const MOCK_RESPONSES = {
   '/v3/iquest/user-profiles/me':           () => apiOk(getMockProfile()),
   '/v3/iquest/user-profiles/leaderboard':  () => apiOk(paginated(MOCK_LEADERBOARD_ENTRIES)),
+  '/v3/iquest/user-profiles/equip-achievement': (body: any) => {
+    if (body?.badge && body?.title) {
+        equipMockAchievement(body.badge, body.title);
+    }
+    return apiOk(null);
+  },
   '/v3/iquest/quests':                     () => apiOk(MOCK_QUESTS),
   '/v3/iquest/quests/me/progress':         () => apiOk(getMockProgress()),
   '/v3/iquest/level-configs':              () => apiOk(MOCK_LEVEL_CONFIGS),

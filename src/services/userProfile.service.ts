@@ -46,6 +46,14 @@ export const userProfileApi = api.injectEndpoints({
       }),
       invalidatesTags: ['UserProfile'],
     }),
+    equipAchievement: builder.mutation<void, { badge: string; title: string }>({
+      query: (body) => ({
+        url: '/v3/iquest/user-profiles/equip-achievement',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['UserProfile', 'Leaderboard'],
+    }),
   }),
 });
 
@@ -55,4 +63,5 @@ export const {
   useGetUserProfileQuery,
   useCreateProposalMutation,
   useUpdateAvatarMutation,
+  useEquipAchievementMutation,
 } = userProfileApi;
