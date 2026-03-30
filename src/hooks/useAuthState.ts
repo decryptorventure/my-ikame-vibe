@@ -11,7 +11,7 @@ interface UseAuthStateReturn {
  * Hook to manage authentication state
  */
 export function useAuthState(): UseAuthStateReturn {
-  const isMock = import.meta.env.VITE_USE_MOCK === 'true';
+  const isMock = import.meta.env.VITE_USE_MOCK !== 'false';
   const [token, setToken] = useState<string | null>(isMock ? 'mock-pwa-token' : null);
   const [isAuthenticated, setIsAuthenticated] = useState(isMock);
 

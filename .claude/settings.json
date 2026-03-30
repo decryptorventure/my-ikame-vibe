@@ -22,6 +22,9 @@
       "Bash(rm DOCS.md PRD.md PLAN.md PROGRESS.md SETUP.md docs_api.md package-lock.json)",
       "Bash(rm \"gamification-engine-docs update.md\")",
       "Bash(ls d:/my-ikame-web-dev/*.md d:/my-ikame-web-dev/*.json)"
+    ],
+    "additionalDirectories": [
+      "d:\\my-ikame-web-dev\\_bmad-output"
     ]
   }
 }

@@ -17,4 +17,8 @@ const renderApp = async () => {
   );
 };
 
-UserService.initKeycloak(renderApp);
+if (import.meta.env.VITE_USE_MOCK !== 'false') {
+  renderApp();
+} else {
+  UserService.initKeycloak(renderApp);
+}
