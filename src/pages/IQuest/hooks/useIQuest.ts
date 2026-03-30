@@ -40,14 +40,38 @@ export function useIQuest() {
     return items.every(q => progressMap.get(q.id)?.status === 'claimed');
   }, [questsData, progressData, progressMap]);
 
+  const achievementQuests = useMemo(() => {
+    if (!questsData) return [];
+    return questsData
+      .filter((q) => q.type === 'achievement')
+      .map((q) => {
+        const prog = progressMap.get(q.id);
+        const status = (prog?.status as IQuestItem['status']) || 'in_progress';
+        return {
+          id: q.id,
+          title: q.title,
+          description: q.description,
+          expPoints: q.expReward,
+          action: q.criteria.action,
+          current: prog?.progress ?? 0,
+          total: q.criteria.count,
+          status,
+          completed: status === 'claimed',
+          canComplete: status === 'in_progress' && (prog?.progress ?? 0) >= q.criteria.count,
+          sortOrder: q.criteria.sortOrder ?? 0,
+          badgeReward: q.badgeReward || undefined,
+        };
+      });
+  }, [questsData, progressMap]);
+
   const sections = useMemo(() => {
     if (!questsData) return [];
 
-    let filtered = questsData;
+    let filtered = questsData.filter(q => q.type !== 'achievement');
     if (activeCategory !== 'all') {
-      filtered = questsData.filter((q) => q.type === activeCategory);
+      filtered = filtered.filter((q) => q.type === activeCategory);
     } else if (onboardingFinished) {
-      filtered = questsData.filter((q) => q.type !== 'onboarding');
+      filtered = filtered.filter((q) => q.type !== 'onboarding');
     }
 
     const groups: Record<string, IQuestItem[]> = {};
@@ -147,6 +171,7 @@ export function useIQuest() {
     onboardingFinished,
     selectedQuest,
     setSelectedQuest,
+    achievementQuests,
     handleQuestClick,
     handleCompleteQuest,
     handleClaimReward,

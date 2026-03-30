@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { ScrollArea } from '@frontend-team/ui-kit';
 import { WarningIcon } from '@phosphor-icons/react';
 import { 
@@ -111,31 +111,8 @@ export default function IQuest() {
     isCelebrationOpen,
     setIsCelebrationOpen,
     celebrationData,
+    achievementQuests, // Thêm dòng này
   } = useIQuest();
-  
-  // Celebration states
-  const [levelUpOpen, setLevelUpOpen] = useState(false);
-  const [onboardingCompleteOpen, setOnboardingCompleteOpen] = useState(false);
-
-  // Track previous values for celebrations
-  const prevLevelRef = useRef(userStats.level);
-  const prevOnboardingFinishedRef = useRef(onboardingFinished);
-
-  // Detect Level Up
-  useEffect(() => {
-    if (userStats.level > prevLevelRef.current && prevLevelRef.current > 0) {
-      setLevelUpOpen(true);
-    }
-    prevLevelRef.current = userStats.level;
-  }, [userStats.level]);
-
-  // Detect Onboarding Completion
-  useEffect(() => {
-    if (onboardingFinished && !prevOnboardingFinishedRef.current) {
-      setOnboardingCompleteOpen(true);
-    }
-    prevOnboardingFinishedRef.current = onboardingFinished;
-  }, [onboardingFinished]);
   
   const [selectedQuestId, setSelectedQuestId] = useState<string | null>(null);
   
@@ -144,10 +121,7 @@ export default function IQuest() {
     return sections.flatMap(s => s.quests).find(q => q.id === selectedQuestId) || null;
   }, [selectedQuestId, sections]);
 
-  // Achievements are quests with badgeReward
-  const achievementQuests = useMemo(() => {
-    return sections.flatMap(s => s.quests).filter(q => !!q.badgeReward);
-  }, [sections]);
+
 
   return (
     <div className="p-6">
@@ -201,19 +175,7 @@ export default function IQuest() {
         </div>
       </div>
 
-      {/* Celebration Modals */}
-      <CelebrationModal 
-        type="level_up" 
-        level={userStats.level} 
-        isOpen={levelUpOpen} 
-        onClose={() => setLevelUpOpen(false)} 
-      />
 
-      <CelebrationModal 
-        type="onboarding_complete" 
-        isOpen={onboardingCompleteOpen} 
-        onClose={() => setOnboardingCompleteOpen(false)} 
-      />
 
       {/* Celebration Modal (Success Claiming Reward) */}
       <CelebrationModal 

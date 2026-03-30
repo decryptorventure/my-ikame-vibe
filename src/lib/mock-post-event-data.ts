@@ -15,6 +15,22 @@ const future = (days: number, hour = 9) => {
 
 export const MOCK_POSTS: PostResponse[] = [
   {
+    id: 'post-wish-mock-1', title: 'Chúc mừng Sinh nhật',
+    content: '<p>Chúc mừng sinh nhật <b>Nguyễn Văn A</b>! 🎂 Chúc bạn tuổi mới rực rỡ, luôn giữ vững ngọn lửa đam mê và gặt hái được nhiều thành công hơn nữa cùng iKame nhé! 🎉✨</p>',
+    category_id: 'cat-social', user_id: 'Nguyen Van Dung', is_deleted: false,
+    public_date: ago(0.5), view_count: 45, target_audience: 'all',
+    created_at: ago(0.5), updated_at: ago(0.5), links: [],
+    like_count: 8, comment_count: 3,
+  },
+  {
+    id: 'post-wish-mock-2', title: 'Kỷ niệm 1 năm đồng hành',
+    content: '<p>Chúc mừng <b>Trần Thị B</b> đã đồng hành cùng đại gia đình iKame được tròn <b>1 năm</b>! 🎖️ Cảm ơn những nỗ lực tuyệt vời của bạn. Chúc bạn sẽ có một hành trình tiếp theo đầy cảm hứng! 🚀💎</p>',
+    category_id: 'cat-social', user_id: 'Lê Minh C', is_deleted: false,
+    public_date: ago(2), view_count: 67, target_audience: 'all',
+    created_at: ago(2), updated_at: ago(2), links: [],
+    like_count: 15, comment_count: 5,
+  },
+  {
     id: 'post-ai-001', title: 'Chúc mừng thành viên mới!',
     content: '<p><b>iKame AI 🤖</b> vừa ghi nhận: Thành viên <b>Nguyễn Văn A</b> đã xuất sắc hoàn thành tất cả nhiệm vụ trong <b>Hành trình Tân thủ</b>! Chào mừng bạn chính thức gia nhập gia đình iKame! 🎉🚀</p>',
     category_id: 'cat-ai', user_id: 'iKame AI 🤖', is_deleted: false,

@@ -8,8 +8,17 @@ import { ScrollToTop, ChatbotBubble } from '@/components';
 import SidebarFooter from '@/components/SidebarFooter';
 import { useGetMyProfileQuery } from '@/services/userProfile.service';
 import { hasSeenWelcome } from '@/pages/Onboarding/hooks';
+import { useCelebrations } from '@/hooks/useCelebrations';
+import { CelebrationModal } from '@/components';
 
 export default function AppLayout() {
+  const { 
+    levelUpOpen, 
+    setLevelUpOpen, 
+    onboardingCompleteOpen, 
+    setOnboardingCompleteOpen,
+    currentLevel 
+  } = useCelebrations();
   const { groups, activeId, onNavigate } = useSidebarNav();
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,6 +56,20 @@ export default function AppLayout() {
         </div>
       </main>
       <ChatbotBubble />
+
+      {/* Global Celebrations */}
+      <CelebrationModal 
+        type="level_up" 
+        level={currentLevel} 
+        isOpen={levelUpOpen} 
+        onClose={() => setLevelUpOpen(false)} 
+      />
+
+      <CelebrationModal 
+        type="onboarding_complete" 
+        isOpen={onboardingCompleteOpen} 
+        onClose={() => setOnboardingCompleteOpen(false)} 
+      />
     </div>
   );
 }

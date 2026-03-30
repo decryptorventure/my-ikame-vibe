@@ -22,11 +22,10 @@ export const socialApi = api.injectEndpoints({
       providesTags: ['Social'],
     }),
     sendWish: builder.mutation<SendWishResponse, SendWishRequest>({
-      queryFn: (_args) => ({
-        data: {
-          postId: `wish-${Date.now()}`,
-          expEarned: 50,
-        } as SendWishResponse,
+      query: (body) => ({
+        url: '/v3/social/wishes',
+        method: 'POST',
+        body,
       }),
       invalidatesTags: ['Social', 'Post', 'Quest'],
     }),

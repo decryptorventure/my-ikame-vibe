@@ -154,6 +154,31 @@ export const MOCK_QUESTS: QuestResponse[] = [
     startDate: NOW, endDate: null, maxCompletions: 1, isActive: true, status: 'active',
     createdBy: 'system', createdAt: NOW, updatedAt: NOW,
   },
+  // ── Special Achievements (Hidden/Cumulative) ──
+  {
+    id: 'quest-ach-01', title: 'Chiến thần đi làm sớm',
+    description: 'Đi làm đúng giờ 30 ngày liên tiếp.',
+    type: 'achievement', criteria: { action: 'icheck_on_time', count: 30, sortOrder: 1 },
+    targetPersona: ['all'], expReward: 5000, badgeReward: '⚡',
+    startDate: NOW, endDate: null, maxCompletions: 1, isActive: true, status: 'active',
+    createdBy: 'system', createdAt: NOW, updatedAt: NOW,
+  },
+  {
+    id: 'quest-ach-02', title: 'Cây bút xuất chúng iWiki',
+    description: 'Xuất bản 10 bài viết chất lượng trên iWiki.',
+    type: 'achievement', criteria: { action: 'iwiki_publish', count: 10, sortOrder: 2 },
+    targetPersona: ['all'], expReward: 3000, badgeReward: '✍️',
+    startDate: NOW, endDate: null, maxCompletions: 1, isActive: true, status: 'active',
+    createdBy: 'system', createdAt: NOW, updatedAt: NOW,
+  },
+  {
+    id: 'quest-ach-03', title: 'Chuyên gia like dạo',
+    description: 'Tương tác like bài viết 100 lần trên Dashboard.',
+    type: 'achievement', criteria: { action: 'social_like', count: 100, sortOrder: 3 },
+    targetPersona: ['all'], expReward: 1500, badgeReward: '👍',
+    startDate: NOW, endDate: null, maxCompletions: 1, isActive: true, status: 'active',
+    createdBy: 'system', createdAt: NOW, updatedAt: NOW,
+  },
 ];
 
 const DEFAULT_PROGRESS: QuestProgressEntry[] = [
@@ -175,6 +200,9 @@ const DEFAULT_PROGRESS: QuestProgressEntry[] = [
   { questId: 'quest-d-03',  progress: 0, status: 'in_progress', target: 1 },
   { questId: 'quest-w-01',  progress: 0, status: 'in_progress', target: 5 },
   { questId: 'quest-m-01',  progress: 0, status: 'in_progress', target: 1 },
+  { questId: 'quest-ach-01', progress: 12, status: 'in_progress', target: 30 },
+  { questId: 'quest-ach-02', progress: 3, status: 'in_progress', target: 10 },
+  { questId: 'quest-ach-03', progress: 45, status: 'in_progress', target: 100 },
 ];
 
 export function getMockProgress(): QuestProgressEntry[] {

@@ -92,6 +92,29 @@ export const MOCK_RESPONSES = {
     MOCK_COMMENTS.push(newCmt);
     return apiOk(newCmt);
   },
+  '/v3/social/wishes':                      (body: any) => {
+    const isBirthday = (body as any)?.type === 'birthday';
+    const newPost = {
+      id: `wish-${Date.now()}`,
+      content: (body as any)?.message || (isBirthday ? 'Chúc mừng sinh nhật! 🎂' : 'Chúc mừng thâm niên! 🎖️'),
+      public_date: new Date().toISOString(),
+      user_id: 'Nguyen Van Dung', // Current user
+      author: {
+        id: 'user-me',
+        name: 'Nguyen Van Dung',
+        avatar: undefined,
+        initials: 'ND'
+      },
+      like_count: 0,
+      comment_count: 0,
+      links: [],
+    };
+    MOCK_POSTS.unshift(newPost as any);
+    return apiOk({
+      postId: newPost.id,
+      expEarned: 50
+    });
+  },
   '/v3/events':                            () => apiOk(paginated(MOCK_EVENTS)),
   '/v3/rewards':                           () => apiOk(MOCK_REWARDS),
 };
