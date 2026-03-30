@@ -5,12 +5,7 @@ interface AchievementQuestCardProps {
   quest: IQuestItem;
 }
 
-const RARITY_COLORS = {
-  common: 'bg-gray-400',
-  rare: 'bg-blue-500',
-  epic: 'bg-purple-600',
-  legendary: 'bg-amber-500',
-};
+
 
 export default function AchievementQuestCard({ quest }: AchievementQuestCardProps) {
   const badgeIcon = quest.badgeReward || '🏅';

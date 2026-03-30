@@ -22,7 +22,7 @@ export const socialApi = api.injectEndpoints({
       providesTags: ['Social'],
     }),
     sendWish: builder.mutation<SendWishResponse, SendWishRequest>({
-      queryFn: (args) => ({
+      queryFn: (_args) => ({
         data: {
           postId: `wish-${Date.now()}`,
           expEarned: 50,

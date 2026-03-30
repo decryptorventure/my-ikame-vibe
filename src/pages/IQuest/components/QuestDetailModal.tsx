@@ -23,7 +23,7 @@ interface QuestDetailModalProps {
 export default function QuestDetailModal({ quest, isOpen, onClose, onComplete, onClaim }: QuestDetailModalProps) {
   if (!quest) return null;
 
-  const isCompleted = quest.status === 'completed' || quest.status === 'claimed';
+
 
   return (
     <Modal 

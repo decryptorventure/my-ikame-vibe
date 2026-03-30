@@ -23,7 +23,7 @@ export function useIQuest() {
 
   const { data: questsData, isLoading: isQuestsLoading } = useGetQuestsQuery();
   const { data: progressData, isLoading: isProgressLoading } = useGetMyQuestProgressQuery();
-  const { data: levelConfigs, isLoading: isLevelLoading } = useGetLevelConfigsQuery();
+  const { data: _levelConfigs, isLoading: isLevelLoading } = useGetLevelConfigsQuery();
 
   const [completeOnboarding] = useCompleteOnboardingMutation();
   const [claimQuestReward] = useClaimQuestRewardMutation();

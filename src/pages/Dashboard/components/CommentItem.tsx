@@ -30,7 +30,7 @@ export default function CommentItem({ comment }: CommentItemProps) {
         size="xs"
         alt={comment.author.name}
         fallback={comment.author.initials}
-        src={comment.author.avatarUrl}
+        src={comment.author.avatar}
       />
       <div className="flex flex-1 flex-col gap-2">
         <div>

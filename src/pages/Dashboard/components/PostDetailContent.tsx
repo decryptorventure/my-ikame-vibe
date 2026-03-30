@@ -16,7 +16,7 @@ export default function PostDetailContent({ post }: PostDetailContentProps) {
       <div className="flex items-center gap-3">
         <Avatar
           size="s"
-          src={post.author.avatarUrl}
+          src={post.author.avatar}
           alt={post.author.name}
           fallback={post.author.initials}
           className="border border_primary"

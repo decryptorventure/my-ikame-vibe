@@ -14,7 +14,7 @@ export default function ReplyItem({ reply, onReply }: ReplyItemProps) {
         size="xxs"
         alt={reply.author.name}
         fallback={reply.author.initials}
-        src={reply.author.avatarUrl}
+        src={reply.author.avatar}
       />
       <div className="flex-1">
         <div>
