@@ -12,7 +12,8 @@
 | ICheck | `src/pages/ICheck/` | Chấm công (iframe → iCheck) | 🔗 Iframe |
 | IGoal | `src/pages/IGoal/` | Mục tiêu OKRs (iframe → iGoal) | 🔗 Iframe |
 | IWiki | `src/pages/IWiki/` | Wiki nội bộ (iframe → iWiki) | 🔗 Iframe |
-| Onboarding | `src/pages/Onboarding/` | Màn hình chào mừng nhân sự mới | ✅ Real API |
+| Onboarding (WelcomeScreen) | `src/pages/Onboarding/` | Màn hình chào mừng + slideshow tính năng | ✅ Mock |
+| Onboarding Journey Map | `src/pages/Onboarding/OnboardingJourney.tsx` | Journey Map 4 milestones tân thủ (`/journey`) | ✅ Mock |
 | UserDetail | `src/pages/UserDetail/` | Xem hồ sơ người dùng khác | ✅ Real API |
 | NotFound | `src/pages/NotFound/` | Trang 404 | - |
 
@@ -110,7 +111,7 @@ Provider chính để quản lý auth state. Expose:
 | `useAuthState` | Đọc auth state từ context |
 | `useLeaderboard` | Fetch và xử lý leaderboard data |
 | `useSSOCallback` | Xử lý SSO callback sau khi đăng nhập |
-| `useSidebarNav` | Navigation items cho sidebar |
+| `useSidebarNav` | Navigation items cho sidebar (bao gồm "Hành trình" `/journey`) |
 | `useSidebarData` | Data cho sidebar (events, user stats) |
 
 ---
@@ -152,7 +153,7 @@ Provider chính để quản lý auth state. Expose:
 | `customFetchBase.ts` | RTK Query base — attach Bearer token, auto refresh |
 | `mock-fetch-base.ts` | Mock base cho development offline |
 | `mock-data.ts` | Mock data chung |
-| `mock-quest-data.ts` | Mock quest data |
+| `mock-quest-data.ts` | Mock quest data (onboarding quests với claimed/completed/in_progress states) |
 | `mock-reward-data.ts` | Mock reward data |
 | `mock-post-event-data.ts` | Mock post/event data |
 | `mock-profile-level-data.ts` | Mock profile/level data |
@@ -182,7 +183,21 @@ File: `src/tiptap/`
 
 ---
 
-## 10. Known Issues / TODOs
+## 10. Routes
+
+| Route | Component | Ghi chú |
+|---|---|---|
+| `/onboarding` | `WelcomeScreen` | Full-screen splash, ngoài AppLayout |
+| `/dashboard` | `Dashboard` | Trang chủ |
+| `/journey` | `OnboardingJourney` | Journey Map 4 milestones tân thủ (mới) |
+| `/iquest` | `IQuest` | Quest list với completed/claim flow |
+| `/events` | `Events` | Sự kiện |
+| `/ireward` | `IReward` | Cửa hàng coin |
+| `/profile` | `Profile` | Hồ sơ cá nhân |
+
+---
+
+## 11. Known Issues / TODOs
 
 | Vị trí | Vấn đề |
 |---|---|
@@ -190,3 +205,4 @@ File: `src/tiptap/`
 | `src/services/social.service.ts` | Mock data — chờ BE implement API |
 | `src/lib/mock-*.ts` | Multiple mock files — cần cleanup khi BE hoàn thành |
 | README.md | Đề cập Ant Design (outdated) — project đã migrate sang `@frontend-team/ui-kit` |
+| `src/pages/Onboarding/` | Cần thêm icon asset riêng cho sidebar item "Hành trình" (hiện dùng chung icon iQuest) |

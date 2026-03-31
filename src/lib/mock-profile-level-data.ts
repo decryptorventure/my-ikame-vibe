@@ -93,6 +93,7 @@ export function getMockProfile(): UserProfileResponse {
     seasonId: 'season-2026',
     coinBalance: 240,
     coinTotalEarned: 580,
+    coinTotalSpent: 340,
     coinSeasonEarned: 190,
     exp,
     level,

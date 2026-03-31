@@ -25,6 +25,7 @@ const ROUTE_TO_ID: Record<string, string> = {
   [ROUTES.ICHECK]: 'icheck',
   [ROUTES.IGOAL]: 'igoal',
   [ROUTES.IWIKI]: 'iwiki',
+  [ROUTES.ONBOARDING_JOURNEY]: 'journey',
 };
 
 export default function useSidebarNav() {
@@ -37,6 +38,7 @@ export default function useSidebarNav() {
         id: 'main',
         items: [
           { id: 'dashboard', label: 'Dashboard', icon: <img src={homeIcon} alt="Dashboard" className="size-6" />, activeIcon: <img src={homeActiveIcon} alt="Dashboard" className="size-6" />, href: ROUTES.DASHBOARD },
+          { id: 'journey', label: 'Hành trình', icon: <img src={medalStarIcon} alt="Hành trình" className="size-6" />, activeIcon: <img src={medalStarActiveIcon} alt="Hành trình" className="size-6" />, href: ROUTES.ONBOARDING_JOURNEY },
           { id: 'iquest', label: 'iQuest', icon: <img src={medalStarIcon} alt="iQuest" className="size-6" />, activeIcon: <img src={medalStarActiveIcon} alt="iQuest" className="size-6" />, href: ROUTES.IQUEST },
           { id: 'events', label: 'Sự kiện', icon: <img src={calendarIcon} alt="Sự kiện" className="size-6" />, activeIcon: <img src={calendarActiveIcon} alt="Sự kiện" className="size-6" />, href: ROUTES.EVENTS },
           { id: 'ireward', label: 'iReward', icon: <img src={giftIcon} alt="iReward" className="size-6" />, activeIcon: <img src={giftActiveIcon} alt="iReward" className="size-6" />, href: ROUTES.IREWARD },

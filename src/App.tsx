@@ -13,6 +13,7 @@ import ICheck from '@/pages/ICheck';
 import IGoal from '@/pages/IGoal';
 import IWiki from '@/pages/IWiki';
 import WelcomeScreen from '@/pages/Onboarding';
+import OnboardingJourney from '@/pages/Onboarding/OnboardingJourney';
 import UserDetail from '@/pages/UserDetail';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import { store } from '@/state/store';
@@ -40,6 +41,7 @@ function App() {
                   >
                     <Route index element={<Navigate to={ROUTES.DASHBOARD} replace />} />
                     <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+                    <Route path={ROUTES.ONBOARDING_JOURNEY} element={<OnboardingJourney />} />
                     <Route path={ROUTES.IQUEST} element={<IQuest />} />
                     <Route path={ROUTES.EVENTS} element={<Events />} />
                     <Route path={ROUTES.EVENT_DETAIL} element={<EventDetail />} />

@@ -182,9 +182,10 @@ export const MOCK_QUESTS: QuestResponse[] = [
 ];
 
 const DEFAULT_PROGRESS: QuestProgressEntry[] = [
-  { questId: 'quest-ob-01', progress: 0, status: 'in_progress', target: 1 },
-  { questId: 'quest-ob-02', progress: 0, status: 'in_progress', target: 1 },
-  { questId: 'quest-ob-03', progress: 0, status: 'in_progress', target: 1 },
+  // Onboarding — ngày 1 đã claimed, còn lại in_progress để demo Journey Map
+  { questId: 'quest-ob-01', progress: 1, status: 'claimed',     target: 1 },
+  { questId: 'quest-ob-02', progress: 1, status: 'claimed',     target: 1 },
+  { questId: 'quest-ob-03', progress: 1, status: 'completed',   target: 1 }, // completed: chờ claim
   { questId: 'quest-ob-04', progress: 0, status: 'in_progress', target: 1 },
   { questId: 'quest-ob-05', progress: 0, status: 'in_progress', target: 1 },
   { questId: 'quest-ob-06', progress: 0, status: 'in_progress', target: 1 },
@@ -195,13 +196,14 @@ const DEFAULT_PROGRESS: QuestProgressEntry[] = [
   { questId: 'quest-ob-11', progress: 0, status: 'in_progress', target: 1 },
   { questId: 'quest-ob-12', progress: 0, status: 'in_progress', target: 1 },
   { questId: 'quest-ob-13', progress: 0, status: 'in_progress', target: 1 },
-  { questId: 'quest-d-01',  progress: 0, status: 'in_progress', target: 1 },
+  // Daily — đi làm đúng giờ hôm nay đã completed (chờ claim)
+  { questId: 'quest-d-01',  progress: 1, status: 'completed',   target: 1 },
   { questId: 'quest-d-02',  progress: 0, status: 'in_progress', target: 1 },
   { questId: 'quest-d-03',  progress: 0, status: 'in_progress', target: 1 },
-  { questId: 'quest-w-01',  progress: 0, status: 'in_progress', target: 5 },
+  { questId: 'quest-w-01',  progress: 3, status: 'in_progress', target: 5 },
   { questId: 'quest-m-01',  progress: 0, status: 'in_progress', target: 1 },
   { questId: 'quest-ach-01', progress: 12, status: 'in_progress', target: 30 },
-  { questId: 'quest-ach-02', progress: 3, status: 'in_progress', target: 10 },
+  { questId: 'quest-ach-02', progress: 3,  status: 'in_progress', target: 10 },
   { questId: 'quest-ach-03', progress: 45, status: 'in_progress', target: 100 },
 ];
 

@@ -6,6 +6,7 @@ export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
   ONBOARDING: '/onboarding',
+  ONBOARDING_JOURNEY: '/journey',
   IQUEST: '/iquest',
   EVENTS: '/events',
   EVENT_DETAIL: '/events/:id',
