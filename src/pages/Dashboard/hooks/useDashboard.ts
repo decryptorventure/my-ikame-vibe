@@ -79,6 +79,7 @@ export function useDashboard() {
 
   return {
     user,
+    profile,
     quests,
     questProgress,
     questTitle,

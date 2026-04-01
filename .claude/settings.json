@@ -21,10 +21,17 @@
       "Bash(ls -la d:/my-ikame-web-dev/*.md d:/my-ikame-web-dev/*.json)",
       "Bash(rm DOCS.md PRD.md PLAN.md PROGRESS.md SETUP.md docs_api.md package-lock.json)",
       "Bash(rm \"gamification-engine-docs update.md\")",
-      "Bash(ls d:/my-ikame-web-dev/*.md d:/my-ikame-web-dev/*.json)"
+      "Bash(ls d:/my-ikame-web-dev/*.md d:/my-ikame-web-dev/*.json)",
+      "Bash(npm run:*)",
+      "Bash(python %USERPROFILE%/.claude/skills/ck-help/scripts/ck-help.py \"\")",
+      "Bash(~.claudeskills.venvScriptspython.exe ~/.claude/skills/ck-help/scripts/ck-help.py \"\")",
+      "Bash(\"$USERPROFILE/.claude/skills/.venv/Scripts/python.exe\" \"$USERPROFILE/.claude/skills/ck-help/scripts/ck-help.py\" \"\")",
+      "Bash(node \"C:/Users/iKame/.claude/scripts/set-active-plan.cjs\" \"260401-0935-manager-dashboard\")"
     ],
     "additionalDirectories": [
-      "d:\\my-ikame-web-dev\\_bmad-output"
+      "d:\\my-ikame-web-dev\\_bmad-output",
+      "D:\\my-ikame-web-dev\\plans",
+      "d:\\my-ikame-web-dev\\src\\pages\\Dashboard\\components\\Manager"
     ]
   }
 }
